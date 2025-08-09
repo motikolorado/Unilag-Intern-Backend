@@ -43,7 +43,7 @@ describe('UsersController (e2e)', () => {
     const res = await request(app.getHttpServer())
       .post('/users')
       .set('Authorization', `Bearer ${token}`)
-      .send({ email: 'new@example.com', name: 'John Doe' })
+      .send({ email: 'new@example.com', fullName: 'John Doe' })
       .expect(201);
 
     expect(res.body.email).toBe('new@example.com');
@@ -53,7 +53,7 @@ describe('UsersController (e2e)', () => {
   it('POST /users - should fail without token', async () => {
     await request(app.getHttpServer())
       .post('/users')
-      .send({ email: 'fail@example.com', name: 'No Auth' })
+      .send({ email: 'fail@example.com', fullName: 'No Auth' })
       .expect(401);
   });
 
@@ -80,10 +80,10 @@ describe('UsersController (e2e)', () => {
     const res = await request(app.getHttpServer())
       .patch(`/users/${createdUserId}`)
       .set('Authorization', `Bearer ${token}`)
-      .send({ name: 'Updated Name' })
+      .send({ fullName: 'Updated Name' })
       .expect(200);
 
-    expect(res.body.name).toBe('Updated Name');
+    expect(res.body.fullName).toBe('Updated Name');
   });
 
   it('DELETE /users/:id - should remove user', async () => {
